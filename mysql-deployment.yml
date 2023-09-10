@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: mysql
+        image: mysql
+        imagePullPolicy: Never
+        env:
+        - name: FLASK_APP
+          value: userapi.py
+        - name: MYSQL_SERVICE_PORT
+          value: "3306"
+        - name: MYSQL_SERVICE_HOST
+          value: SQLDATA
+        - name: db_name
+          value: test_database
+        - name: db_root_password
+          value: root
+        ports:
+        - containerPort: 3306
+          name: db-container
+        volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: db
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    name: mysql
+  selector:
+    app: db
+  type: NodePort
