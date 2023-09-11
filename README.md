@@ -16,17 +16,7 @@ Your task is to accomplish the following:
 - Build a deployment mechanism for the app
 - Describe a plan for continuous delivery with the specific tools/vendors you'd
   look at and your evaluation criteria for them
-  
-  - CI (JENKINS,SONAQRUBE image -->DOCKER REGISTRY) --> pull the image
-  -CD Kubernetes kubectl.yml - done by j
-  jenkins connect to kubectl then deploy.yml
-  -monitoring elk,
-  
-  ci-dev, image 1.0 snapshot, dply success promote the image 
-  prod registry
-  
-  
-  prod: before stage phase 
+   
 
 ## Deliverables
 
